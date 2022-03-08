@@ -1,29 +1,33 @@
 #!/bin/bash
-echo "checking for Linux updates..."
-sudo apt-get update -y
-db_user="mob_db_user"
-db_pwd="mob_db_pass"
-sys_user="mob_app_usr"
-user_dir=/home/$sys_user
-packages=('git' 'gcc' 'tar' 'gzip' 'libreadline5' 'make' 'zlib1g' 'zlib1g-dev' 'flex' 'bison' 'perl' 'python3' 'tcl' 'gettext' 'odbc-postgresql' 'libreadline6-dev')
 
-echo "Installing PostgreSQL dependencies"
-sudo apt-get install ${packages[@]} -y
+#Installing postgresql
 
-echo "installing postgres..."
-sudo apt-get install postgresql -y
-sudo /etc/init.d/postgresql start
+sudo apt update
 
-echo "adding user to postgres with password..."
-sudo -u postgres createuser -s -i -d -r -l -w $db_user
-sudo -u postgres psql -c "ALTER ROLE $db_user WITH PASSWORD '$db_pwd' ";
+sudo apt install postgresql postgresql-contrib
 
-echo "creating user with home directory..."
-sudo useradd -m -d $user_dir $sys_user
+#Creating user with password
 
-echo "Cloning forked repository into home directory of user..."
-cd $user_dir
+sudo -u postgres psql -c "create user mob_db_usr with password 'mob_db_pass'"
 
-echo "removing existing files from user directory..."
-sudo rm -rf $user_dir/*
-sudo git clone https://github.com/rmwahunga/Mobalysis.git
+#creating user home directory
+
+sudo useradd -m -d/home/mob_app_usr mob_app_usr
+
+#cloning repository 
+
+git clone https://github.com/rmwahunga/Mobalysis.git
+
+#installing python3-venv
+
+sudo apt install python3-venv
+
+#creating an empty database with the name mobalytics
+
+sudo -u postgres psql -c "create database mobalytics"
+
+#setting the owner of the mobalytics database to mob_db_user
+
+sudo -u postgres psql -c "alter dabadase mobalytics owner to mob_db_usr"
+
+git clone https://github.com/rmwahunga/Mobalysis.git

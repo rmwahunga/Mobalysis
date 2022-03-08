@@ -1,64 +1,59 @@
+#!/bin/bash
 
-sys_user="mob_app_usr"
+#cloning repository into user's home dorectory
 
-user_dir=/home/$sys_user
+cd ..
 
-echo "creating user with home directory..."
+cd mob_app_user
 
-sudo useradd -m -d $user_dir $sys_user
+sudo su mob_app_user
 
-echo "Cloning forked repository into home directory of user..."
+git clone https://github.com/rmwahunga/Mobalysis.git
 
-cd $user_dir
+#Adding environment variables and values to the mob_app_usr’s bashrc file
+
+export DBNAME=mobalytics
+
+export DBUSER=mob_db_user
+
+export DBPASS=mob_db_pass
+
+export DBHOST=localhost
+
+export DBPORT=5432
+
+git clone https://github.com/rmwahunga/Mobalysis.git
+
+# creating the virtual environment with directory named "myenv"
+
+mkdir myenv
+
+cd myenv
+
+python -m venv myenv
+
+# activating virtual environme
+
+source myenv/bin/activate
+
+#installing application packages
+
+python3 -m install requests
+
+#new migrations
+
+python3 [/path/to/backend application folder]/manage.py makemigrations
+
+#Installing the backend migrations
+
+Install the backend migrations 
+
+git clone https://github.com/rmwahunga/Mobalysis.git 
+
+python3 [/path/to/backend application folder]/manage.py makemigrations
 
 
-echo "removing existing files from user directory..."
-
-sudo rm -rf $user_dir/*
-
-#setting enviromental variables
-
-export DBNAME="mobalytics"
-
-export DBUSER="mob_db_user"
-
-export DBPASS="mob_db_pass"
-
-export DBHOST="localhost"
-
-export DBPORT="5432"
-
-
-# Getting latest updates
-
-sudo apt update
-
-sudo apt upgrade
-
-#installing package manager
-
-sudo apt install python3-pip
-
-#installing venv package
-
-sudo apt-get install python3-venv
-
-# creating the virtual environment with directory named "my_env_project"
-
-sudo python3 -m venv my_env_project
-
-# activating virtual environment
-
-source ./my_env_project/bin/activate
-
-
-#verifying environment
-
-python3
-
-#creating a database mobalytics
-
-sudo -u postgres pqsl createdb mobalytics -c createuser mob_db_user
 
 
 sudo git clone https://github.com/rmwahunga/Mobalysis.git
+
