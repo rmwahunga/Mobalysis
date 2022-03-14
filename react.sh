@@ -22,17 +22,32 @@ sudo apt-get install nginx -y
  
 nginx  -v
 
-sudo systemctl reload nginx
+
 
 #moving to the default root folder of the web server
 
 cd  /var/www/html/
 
-#creating  react app
 
-npx  create-react-app react-tutorial
+#cloning  react-app
 
-cd react-tutorial
+sudo git clone  https://github.com/rmwahunga/Mobalysis.git
 
-npm start
+cd /Mobalysis/frontend
+
+sudo npm install
+
+sudo npm build
+
+#copy build files
+
+sudo cp -r /var/www/html/Mobalysis/frontend/*/var/www/html
+
+sudo rm -rf index.nginx.debian.html
+
+#restart nginx
+
+sudo systemctl reload nginx
+
+
 
