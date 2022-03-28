@@ -1,0 +1,32 @@
+---
+    - hosts: all
+      become: yes
+      tasks:
+        - name: update package repo
+          ansible.builtin.commmand: apt update
+        - name: install nginx
+          ansible.builtin.command: apt install nginx -y
+        - name: install curl
+          ansible.builtin.command: apt-get install curl
+        - name: download node source
+          ansible.builtin.shell: curl -SL https://deb.nodesource.com/setup_14.x | sudo -E bash .
+        - name: install nodejs
+          ansible.builtin.command: apt-get install -y nodejs
+        - name: clone repo
+          ansible.builtin.command: git clone https://github.com/rmwahunga/Mobalysis.git
+          args:
+            chdir: /var/www/html
+        - name: install node module
+          ansible.builtin.command: nip install
+          args:
+            chdir: /var/html/Mobalysis/frontend
+        -name: run build
+         ansible.builtin.command: npm run build
+        - name: copy contents to build directory
+          ansible.builtin.shell: CP -r/var/ww/html/frontend/build/*/var/www/html
+        -name: remove nginx default index file
+         ansible.builtin.command: rm -rf index.debian.html
+         args:
+           chdir: var/www/html
+        -name: restart nginx
+         ansible.builtin.command: system restart nginx
