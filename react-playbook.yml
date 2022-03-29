@@ -17,7 +17,7 @@
           args:
             chdir: /var/www/html
         - name: install node module
-          ansible.builtin.command: nip install
+          ansible.builtin.command: npm install
           args:
             chdir: /var/html/Mobalysis/frontend
         -name: run build
