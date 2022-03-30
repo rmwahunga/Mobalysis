@@ -1,0 +1,19 @@
+
+---
+    - hosts: all
+      become: yes
+      tasks:
+       - name: virtual environment directory
+         ansible.builtin.command: mkdir myenv
+         args:
+          chdir: /myenve/
+       -name: activate virtual environment
+        ansible.builtin.command: source/myenv/activate
+       -name: install application packages
+        ansible.builtin.command: python3 -m install requests
+        -name: cloning backend 
+         ansible.builtin.command: git clone https://github.com/rmwahunga/Mobalysis.git
+        -name: make migration
+         ansible.builtin.command: python3 [home/Mobalysis/backend]/manage.py makemigrations
+        -name: install mogrations
+         ansible.builtin.command: install migrations
