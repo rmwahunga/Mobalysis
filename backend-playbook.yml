@@ -13,8 +13,6 @@
          ansible.builtin.command: source nevn/bin/activate
        - name: install postgresql
          ansible.builtin.command: sudo apt install postgresql -y postgresql-contrib      
-       - name: cloning backend
-         ansible.builtin.command: git clone https://github.com/rmwahunga/Mobalysis.git
          args:
             chdir: /home/shoboi/Mobalysis/frontend     
        - name: install requirements
