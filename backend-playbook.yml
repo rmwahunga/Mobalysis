@@ -3,17 +3,24 @@
     - hosts: all
       become: yes
       tasks:
-       - name: virtual environment directory
-         ansible.builtin.command: mkdir myenv
-         args:
-          chdir: /myenve/
-       -name: activate virtual environment
-        ansible.builtin.command: source/myenv/activate
-       -name: install application packages
-        ansible.builtin.command: python3 -m install requests
-        -name: cloning backend 
+       - name: cloning repo
          ansible.builtin.command: git clone https://github.com/rmwahunga/Mobalysis.git
-        -name: make migration
-         ansible.builtin.command: python3 [home/Mobalysis/backend]/manage.py makemigrations
-        -name: install mogrations
+         args:
+          chdir: /home/shoboi/   
+       - name: install python3-evn
+         ansible.builtin.command:  apt-get install python3-venv
+       - name: activate virtual environment
+         ansible.builtin.command: source nevn/bin/activate
+       - name: install postgresql
+         ansible.builtin.command: sudo apt install postgresql -y postgresql-contrib      
+       - name: cloning backend
+         ansible.builtin.command: git clone https://github.com/rmwahunga/Mobalysis.git
+         args:
+            chdir: /home/shoboi/Mobalysis/frontend     
+       - name: install requirements
+         ansible.builtin.command: pip install -r requirements.txt
+       - name: make migration
+         ansible.builtin.command: python3 [home/shoboi/Mobalysis/backend]/manage.py makemigrations
+       - name: install migrations
          ansible.builtin.command: install migrations
+
